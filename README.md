@@ -3,11 +3,15 @@
 [![Build Status](https://travis-ci.org/CY-Tech-NLP-DL-UC/optical-character-recognition.svg?branch=main)](https://travis-ci.org/CY-Tech-NLP-DL-UC/optical-character-recognition)
 [![codecov](https://codecov.io/gh/CY-Tech-NLP-DL-UC/optical-character-recognition/branch/main/graph/badge.svg)](https://codecov.io/gh/CY-Tech-NLP-DL-UC/optical-character-recognition)
 
-Small API to read text from picture data.
+Small API that will have several features :
 
-## Install The Project
+* Read license plate from pictures
+* Read text from images. (letters...)
 
-After cloning the project, you may need to install the flask package. To do so, follow these commands:
+## Project installation
+
+After cloning project, you may need to install the flask package.
+To do so, follow these commands (do not ommit to use python environment if needed) :
 
 ```sh
 # Move into the repository
@@ -16,7 +20,7 @@ cd optical-character-recognition
 pip install -e .
 ```
 
-## Start The API
+## Starting the API:
 
 In the root directory `ocrapi`:
 
@@ -46,7 +50,7 @@ python -m pytest
 
 ## How to contribute
 
-To ensure the code quality, you should check that you have installed `pre-commit` in your `.git` folder using the command:
+To ensure code quality, you should check that you have installed `pre-commit` in your `.git` folder using the command:
 
 ```sh
 pre-commit install
