@@ -3,10 +3,27 @@
 [![Build Status](https://travis-ci.org/CY-Tech-NLP-DL-UC/optical-character-recognition.svg?branch=main)](https://travis-ci.org/CY-Tech-NLP-DL-UC/optical-character-recognition)
 [![codecov](https://codecov.io/gh/CY-Tech-NLP-DL-UC/optical-character-recognition/branch/main/graph/badge.svg)](https://codecov.io/gh/CY-Tech-NLP-DL-UC/optical-character-recognition)
 
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Project installation](#project-installation)
+* [Starting the API](#starting-the-api)
+* [Tests](#tests)
+* [How to contribute](#how-to-contribute)
+
+## General info
+
 Small API that will have several features :
 
 * Read license plate from pictures
 * Read text from images. (letters...)
+
+## Technologies
+
+This project was created using:
+
+* Python 3.6
+* Flask 0.12.2
 
 ## Project installation
 
