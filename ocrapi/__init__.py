@@ -1,6 +1,8 @@
 import os
 
-from flask import Flask
+from flask import Flask, jsonify, request
+
+from .lp_prediction_pytorch.lp_prediction import get_prediction
 
 
 def create_app(test_config=None):
@@ -8,7 +10,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY="dev",
-        DATABASE=os.path.join(app.instance_path, "chatbotapi.sqlite"),
+        DATABASE=os.path.join(app.instance_path, "ocrapi.sqlite"),
     )
 
     if test_config is None:
@@ -28,5 +30,15 @@ def create_app(test_config=None):
     @app.route("/welcome")
     def home():
         return "Welcome dear developers!"
+
+    @app.route("/predict", methods=["GET", "POST"])
+    def predict():
+        if request.method == "POST":
+            file = request.files["file"]
+            img_bytes = file.read()
+            content = get_prediction(image_bytes=img_bytes)
+            return jsonify({"prediction": content})
+        else:
+            return "Nothing to say"
 
     return app
