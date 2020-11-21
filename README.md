@@ -24,6 +24,10 @@ This project was created using:
 
 * Python 3.6
 * Flask 0.12.2
+* Pytorch
+  * `torch` 1.6.0
+  * `torchvision` 0.7.0
+ * Pillow 7.2.0
 
 ## Project installation
 

@@ -9,6 +9,12 @@ setup(
     description="OCR API for fun",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    install_requires=["flask", "python-dotenv"],
+    install_requires=[
+        "flask",
+        "python-dotenv",
+        "torch",
+        "torchvision",
+        "Pillow",
+    ],
     packages=find_packages(),
 )
