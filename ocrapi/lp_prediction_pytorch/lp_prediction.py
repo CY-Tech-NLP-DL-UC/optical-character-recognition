@@ -87,6 +87,7 @@ def get_prediction(image_bytes):
         img_height, channel_number, len(alphabet), number_hidden_layers
     )
     model.load_state_dict(torch.load(model_folder / "crnn.pth"))
+    model = model.to("cpu")
     model.eval()
 
     tensor = transform_images(image_bytes=image_bytes)
