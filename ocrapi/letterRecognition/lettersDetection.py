@@ -1,3 +1,6 @@
+#from google.colab import drive
+#drive.mount('/content/drive')
+
 import matplotlib.pyplot as plt
 import cv2
 import numpy as np
@@ -5,8 +8,8 @@ import itertools
 import networkx as nx
 import matplotlib.colors as col
 import matplotlib.pyplot as plt
-%matplotlib inline
-from google.colab.patches import cv2_imshow
+#%matplotlib inline
+#from google.colab.patches import cv2_imshow
 from imutils import contours
 
 class Node(object):
@@ -162,38 +165,6 @@ class UnionFind:
 CONNECTIVITY_4 = 4
 CONNECTIVITY_8 = 8
 
-def addspace(gray, tresh, w):
-  # Sum white pixels in each row
-  # Create blank space array and and final image 
-  pixels = np.sum(thresh, axis=1).tolist()
-  space = np.ones((1, w), dtype=np.uint8) * 255
-  result = np.zeros((0, w), dtype=np.uint8)
-
-  # Iterate through each row and add space if entire row is empty
-  # otherwise add original section of image to final image
-  for index, value in enumerate(pixels):
-      if value < 255*len(tresh[0])/10:
-          result = np.concatenate((result, space), axis=0)
-      row = gray[index:index+1, 0:w]
-      result = np.concatenate((result, row), axis=0)
-  return result
-
-def addspace_v(gray, thresh, h):
-  # Sum white pixels in each row
-  # Create blank space array and and final image 
-  pixels = np.sum(thresh, axis=0).tolist()
-  space = np.ones((h, 1), dtype=np.uint8) * 255
-  result = np.zeros((h, 0), dtype=np.uint8)
-
-  # Iterate through each row and add space if entire row is empty
-  # otherwise add original section of image to final image
-  for index, value in enumerate(pixels):
-      if value < 255*len(thresh[0])/10:
-          result = np.concatenate((result, space), axis=1)
-      row = gray[0:h, index:index+1]
-      result = np.concatenate((result, row), axis=1)
-  return result
-
 def connected_component_labelling(bool_input_image, connectivity_type=CONNECTIVITY_8):
   """
     2 pass algorithm using disjoint-set data structure with Union-Find algorithms to maintain 
@@ -340,6 +311,37 @@ def image_to_2d_bool_array(image):
 
   return arr
 
+def addspace(gray, thresh, w):
+  # Sum white pixels in each row
+  # Create blank space array and and final image 
+  pixels = np.sum(thresh, axis=1).tolist()
+  space = np.ones((1, w), dtype=np.uint8) * 255
+  result = np.zeros((0, w), dtype=np.uint8)
+
+  # Iterate through each row and add space if entire row is empty
+  # otherwise add original section of image to final image
+  for index, value in enumerate(pixels):
+      if value < 255*len(tresh[0])/10:
+          result = np.concatenate((result, space), axis=0)
+      row = gray[index:index+1, 0:w]
+      result = np.concatenate((result, row), axis=0)
+  return result
+
+def addspace_v(gray, thresh, h):
+  # Sum white pixels in each row
+  # Create blank space array and and final image 
+  pixels = np.sum(thresh, axis=0).tolist()
+  space = np.ones((h, 1), dtype=np.uint8) * 255
+  result = np.zeros((h, 0), dtype=np.uint8)
+
+  # Iterate through each row and add space if entire row is empty
+  # otherwise add original section of image to final image
+  for index, value in enumerate(pixels):
+      if value < 255*len(thresh[0])/10:
+          result = np.concatenate((result, space), axis=1)
+      row = gray[0:h, index:index+1]
+      result = np.concatenate((result, row), axis=1)
+  return result
 
 def border(coordinates):
   i_min, j_min = 1000, 1000
@@ -355,20 +357,13 @@ def border(coordinates):
       j_max = j
   return [(i_min, j_min), (i_max, j_max)]
 
-
-CONNECTIVITY_4 = 4
-CONNECTIVITY_8 = 8
-
 def lettersDetection(img):
-  #img = cv2.imread("/content/drive/MyDrive/lettres.PNG")
-  #img = np.array(img, dtype=np.uint8)
+
   h, w = img.shape[:2]
   gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
   thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-  
-  
   img = addspace(gray, thresh, w)
-  
+
   kernel = np.ones((3,3), np.uint8)
   kernel[0, 0] = 0
   kernel[0, 2] = 0
@@ -376,107 +371,95 @@ def lettersDetection(img):
   kernel[2, 2] = 0
   
   erosion = cv2.erode(img, kernel, iterations = 10)
-  cv2_imshow(erosion)
-  
-  erosion = cv2.GaussianBlur(erosion,(13,13),0)
-  tresh = cv2.threshold(erosion, 127, 255, cv2.THRESH_BINARY_INV)[1]  # ensure binary
-  
+  blur = cv2.GaussianBlur(erosion,(13,13),0)
+  tresh = cv2.threshold(blur, 127, 255, cv2.THRESH_BINARY_INV)[1]
+
   label_img = connected_component_labelling(image_to_2d_bool_array(tresh), 4)
-  
   label_hue = np.uint8(179*label_img/np.max(label_img))
   blank_ch = 255*np.ones_like(label_hue)
   labeled_img = cv2.merge([label_hue, blank_ch, blank_ch])
-  
-  # cvt to BGR for display
   labeled_img = cv2.cvtColor(labeled_img, cv2.COLOR_HSV2BGR)
-  
-  # set bg label to black
   labeled_img[label_hue==0] = 0
-  
+
   sub_imgs = []
   for i in range(1, np.max(label_img) + 1):
     indices = np.where(label_img == i)
     coordinates = zip(indices[0], indices[1])
     borders = border(coordinates)
     if borders[1][0] - borders[0][0] + borders[1][1] - borders[1][1] < 50:
-    continue
+      continue
     sub_img = img[borders[0][0] : borders[1][0], borders[0][1] : borders[1][1]]
     j=0
     while j < len(sub_img):
-    if sum(sub_img[j]) == 255*len(sub_img[j]):
-      sub_img =  np.delete(sub_img, (j), axis=0)
-    else:
-      j+=1 
+      if sum(sub_img[j]) == 255*len(sub_img[j]):
+        sub_img =  np.delete(sub_img, (j), axis=0)
+      else:
+        j+=1
     sub_imgs.append(sub_img)
-  
+
   phrases = []
   for sub_img in sub_imgs:
     h, w = sub_img.shape[:2]
     thresh = cv2.threshold(sub_img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
     sub_img = addspace(sub_img, thresh, w)
-    #erosion = cv2.erode(sub_img, kernel, iterations = 1)
-    #blur = cv2.GaussianBlur(erosion,(13,13),0)
-    #img2 = cv2.threshold(blur, 180, 255, cv2.THRESH_BINARY_INV)[1]  # ensure binary
-    print("__")
-    
     ind_phrases = []
     i_min = 0
     for i in range(len(sub_img)):
-    s = sum(sub_img[i])
-    if s == 255*len(sub_img[i]):
-      i_max = i
-      if i_max - i_min < 4:
-      i_min = i+1
-      continue
-      ind_phrases.append((max(i_min-5, 0), min(i_max+5, len(sub_img)-1)))
-      i_min = i+1
+      s = sum(sub_img[i])
+      if s == 255*len(sub_img[i]):
+        i_max = i
+        if i_max - i_min < 4:
+          i_min = i+1
+          continue
+        ind_phrases.append((max(i_min-5, 0), min(i_max+5, len(sub_img)-1)))
+        i_min = i+1
     for i in ind_phrases:
-    sub_im = sub_img[i[0] : i[1], :]
-    j=0
-    while j < len(sub_im):
-      if sum(sub_im[j]) == 255*len(sub_im[j]):
-      sub_im =  np.delete(sub_im, (j), axis=0)
-      else:
-      j+=1 
-    phrases.append(sub_im)
+      sub_im = sub_img[i[0] : i[1], :]
+      j=0
+      while j < len(sub_im):
+        if sum(sub_im[j]) == 255*len(sub_im[j]):
+          sub_im =  np.delete(sub_im, (j), axis=0)
+        else:
+          j+=1 
+      phrases.append(sub_im)
   
   sub_words = []
   for phrase in phrases:
     h, w = phrase.shape[:2]
     thresh = cv2.threshold(phrase, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
     phrase=addspace_v(phrase, thresh, h)
-  
     erosion = cv2.erode(phrase, kernel, iterations = 8)
-    erosion = cv2.GaussianBlur(erosion,(13,13),0)
-    tresh = cv2.threshold(erosion, 127, 255, cv2.THRESH_BINARY_INV)[1]  # ensure binary
-  
+    blur = cv2.GaussianBlur(erosion,(13,13),0)
+    tresh = cv2.threshold(blur, 127, 255, cv2.THRESH_BINARY_INV)[1]  # ensure binary
     phrase_label = connected_component_labelling(image_to_2d_bool_array(tresh), 4)
     label_hue = np.uint8(179*phrase_label/np.max(phrase_label))
     blank_ch = 255*np.ones_like(label_hue)
     phrased_label = cv2.merge([label_hue, blank_ch, blank_ch])
-    # cvt to BGR for display
     phrased_label = cv2.cvtColor(phrased_label, cv2.COLOR_HSV2BGR)
-  
-    # set bg label to black
     phrased_label[label_hue==0] = 0
     for i in range(1, np.max(phrase_label) + 1):
-    indices = np.where(phrase_label == i)
-    coordinates = zip(indices[0], indices[1])
-    borders = border(coordinates)
-    if borders[1][0] - borders[0][0] + borders[1][1] - borders[1][1] < 5:
-      continue
-    sub_img = phrase[borders[0][0] : borders[1][0], borders[0][1] : borders[1][1]]
-    h, w = sub_img.shape[:2]
-    j=0
-    sum_col = np.sum(sub_img, axis=0)
-    while j < len(sum_col):
-      if sum_col[j] == 255*h:
-      sub_img =  np.delete(sub_img, (j), axis=1)
-      sum_col =  np.delete(sum_col, (j), axis=0)
-      else:
-      j+=1
-    sub_words.append(sub_img)
+      indices = np.where(phrase_label == i)
+      coordinates = zip(indices[0], indices[1])
+      borders = border(coordinates)
+      if borders[1][0] - borders[0][0] + borders[1][1] - borders[1][1] < 5:
+        continue
+      sub_img = phrase[borders[0][0] : borders[1][0], borders[0][1] : borders[1][1]]
+      h, w = sub_img.shape[:2]
+      j=0
+      sum_col = np.sum(sub_img, axis=0)
+      while j < len(sum_col):
+        if sum_col[j] == 255*h:
+          sub_img =  np.delete(sub_img, (j), axis=1)
+          sum_col =  np.delete(sum_col, (j), axis=0)
+        else:
+          j+=1
+      sub_words.append(sub_img)
   return sub_words
-    
 
-  
+"""img = cv2.imread("/content/drive/MyDrive/lettres.PNG")
+img = np.array(img, dtype=np.uint8)
+print(img.shape)
+word=lettersDetection(img)
+print(len(word))
+for i in word:
+  cv2_imshow(i)"""
