@@ -31,14 +31,12 @@ def create_app(test_config=None):
     def home():
         return "Welcome dear developers!"
 
-    @app.route("/predict", methods=["GET", "POST"])
-    def predict():
+    @app.route("/recognize_text_pytorch", methods=["POST"])
+    def recognize_text_pytorch():
         if request.method == "POST":
             file = request.files["file"]
             img_bytes = file.read()
             content = get_prediction(image_bytes=img_bytes)
             return jsonify({"prediction": content})
-        else:
-            return "Nothing to say"
 
     return app

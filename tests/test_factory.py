@@ -15,8 +15,9 @@ def test_home(client) -> None:
     assert response.data == b"Welcome dear developers!"
 
 
-def test_predict(client) -> None:
+def test_recognize_text_pytorch(client) -> None:
     response = client.post(
-        "/predict", data={"file": open(str(data_folder / "A007HA50.png"), "rb")}
+        "/recognize_text_pytorch",
+        data={"file": open(str(data_folder / "A007HA50.png"), "rb")},
     )
     assert response.json["prediction"] == "A007HA50"
