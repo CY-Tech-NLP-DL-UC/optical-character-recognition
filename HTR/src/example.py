@@ -1,7 +1,10 @@
 from TranslateHandwriting import translateHandwriting
+import cv2
 
 def main():
-    result = translateHandwriting('../data/test.png')
+    # exemple avec une image de test
+    image = cv2.imread('../data/test.png', cv2.IMREAD_GRAYSCALE)
+    result = translateHandwriting(image)
 
 if __name__ == '__main__':
 	main()

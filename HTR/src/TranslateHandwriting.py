@@ -53,15 +53,15 @@ class Batch:
 		self.imgs = np.stack(imgs, axis=0)
 		self.gtTexts = gtTexts
 
-def infer(model, fnImg):
+def infer(model, image):
 	"recognize text in image provided by file path"
-	img = preprocess(cv2.imread(fnImg, cv2.IMREAD_GRAYSCALE), Model.imgSize)
+	img = preprocess(image, Model.imgSize)
 	batch = Batch(None, [img])
 	(recognized, probability) = model.inferBatch(batch, True)
 	print('Recognized:', '"' + recognized[0] + '"')
 	print('Probability:', probability[0])
 	return recognized[0]
 
-def translateHandwriting(imagePath):
+def translateHandwriting(image):
 	model = Model(open('../model/charList.txt').read(), mustRestore=True)
-	infer(model, imagePath)
+	infer(model, image)
