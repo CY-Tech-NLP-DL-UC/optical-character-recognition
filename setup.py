@@ -15,6 +15,9 @@ setup(
         "torch",
         "torchvision",
         "Pillow",
+        "opencv-python",
+        "tensorflow",
+        "Keras",
     ],
     packages=find_packages(),
 )

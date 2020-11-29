@@ -6,7 +6,14 @@ from werkzeug.utils import secure_filename
 
 from .lp_prediction_pytorch.lp_prediction import get_prediction
 
+# from .pl_detection.pl_detection import pl_detection
+
+# import io
+# from PIL import Image
+# import numpy as np
+
 UPLOAD_FOLDER = Path(__file__).resolve().parent / "static" / "uploads"
+OUTPUT_FOLDER = Path(__file__).resolve().parent / "static" / "outputs"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
 
@@ -24,6 +31,7 @@ def create_app(test_config=None):
         SECRET_KEY="dev",
         DATABASE=os.path.join(app.instance_path, "ocrapi.sqlite"),
         UPLOAD_FOLDER=UPLOAD_FOLDER,
+        OUTPUT_FOLDER=OUTPUT_FOLDER,
     )
 
     if test_config is None:
@@ -62,16 +70,32 @@ def create_app(test_config=None):
                 flash("No selected file")
                 return redirect(request.url)
             if file and allowed_file(file.filename):
+                # load uploaded file
                 filename = secure_filename(file.filename)
-                full_filename = app.config["UPLOAD_FOLDER"] / filename
-                rel_filename = Path("..") / "static" / "uploads" / filename
-                file.save(full_filename)
-                input_img = open(full_filename, "rb")
-                img_bytes = input_img.read()
-                response = get_prediction(image_bytes=img_bytes)
+                original_path = app.config["UPLOAD_FOLDER"] / filename
+                original_rel_path = Path("..") / "static" / "uploads" / filename
+                file.save(original_path)
+                # FIXME: plate detection
+                # file = open(original_path, "rb")
+                # img_bytes = file.read()
+                # img = np.array(Image.open(io.BytesIO(img_bytes)))
+                # img = img[:, np.newaxis]
+                filename = "extracted_plate.png"
+                # plate_path = app.config["OUTPUT_FOLDER"] / filename
+                plate_rel_path = Path("..") / "static" / "outputs" / filename
+                # plate_file = pl_detection(img)
+                # plate_file.save(plate_path)
+                # content extraction
+                # input_img = open(plate_path, "rb")
+                # img_bytes = input_img.read()
+                # response = get_prediction(image_bytes=img_bytes)
+                response = (
+                    None  # TODO: remove this line when everything is working
+                )
                 return render_template(
                     "license_plate.html",
-                    plate_img=rel_filename,
+                    original_img=original_rel_path,
+                    plate_img=plate_rel_path,
                     response=response,
                 )
         return render_template("license_plate.html")

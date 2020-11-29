@@ -26,12 +26,17 @@
             <div class="d-flex flex-row justify-content-center mb-3">
                 <h2>License plate extraction</h2>
             </div>
-            {% if plate_img %}
-            <img src={{plate_img}} alt="Plate Image">
+            {% if original_img %}
+            <img src={{original_img}} alt="{{original_img}}">
             {% else %}
             <p>No uploaded image to process.</p>
             {% endif %}
-        
+
+            {% if plate_img %}
+            <img src={{plate_img}} alt="{{plate_img}}">
+            {% else %}
+            <p>No extracted plate_img</p>
+            {% endif %}
             {% if response %}
             <p>Predicted: {{response}} </p>
             {% else %}
