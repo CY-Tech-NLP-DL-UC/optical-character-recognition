@@ -7,10 +7,11 @@ import random
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 def pl_detection(image):
-  wpod_net = fct.load_model(os.path.join(dir_path, 'pl_detection'))
-  image = fct.color2gray(image)
-  imgPL = fct.get_plate(image, wpod_net, Dmax=608, Dmin=256)
-  return imgPL[0]
+    print("load :", os.path.join(dir_path))
+    wpod_net = fct.load_model(os.path.join(dir_path, 'pl_detection'))
+    image = fct.color2gray(image)
+    imgPL = fct.get_plate(image, wpod_net, Dmax=608, Dmin=256)
+    return imgPL[0]
 
 if __name__ == '__main__':
     path_folder = os.path.join(dir_path, "..", "..", "license_plates_detection", "Photos")
