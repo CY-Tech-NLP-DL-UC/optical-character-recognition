@@ -3,9 +3,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Gimme your plate !</title>
 </head>
 <body>
+
+    <div class="d-flex flex-row justify-content-center m-3">
+    {% if logo %}
+    <img src={{logo}} alt="{{logo}}" align="center"/>
+    {% else %}
+    <p align="center">logo - TheApp</p>
+    {% endif %}
+    </div>
+
     <div class="d-flex flex-row justify-content-center m-3">
         <h1>Gimme your plate</h1>
     </div>
@@ -14,37 +23,18 @@
         <form method=post enctype=multipart/form-data class="d-flex flex-column justify-content-around m-3" style="height: 200px;">
             <div class="custom-file">
                 <input class="custom-file-input" type=file name=file id="uploadFile">
-                <label class="custom-file-label" for="uploadFile">Choose file...</label>
+                <label class="custom-file-label" for="uploadFile"></label>
             </div>
-            
-            <button type=submit class="btn btn-primary">Upload</button>
+            <div class="d-flex flex-row justify-content-center m-3">
+            <a href="/gimme_your_plate">
+            <button type=submit class="btn btn-primary" align="center"> GO !</button>
+            </a>
+            </div>
         </form>
+
     </div>
 
-    <div class="d-flex flex-row justify-content-center p-3">
-        <div class="d-flex flex-column justify-content-around" style="height: 200px;">
-            <div class="d-flex flex-row justify-content-center mb-3">
-                <h2>License plate extraction</h2>
-            </div>
-            {% if original_img %}
-            <img src={{original_img}} alt="{{original_img}}">
-            {% else %}
-            <p>No uploaded image to process.</p>
-            {% endif %}
-
-            {% if plate_img %}
-            <img src={{plate_img}} alt="{{plate_img}}">
-            {% else %}
-            <p>No extracted plate_img</p>
-            {% endif %}
-            {% if response %}
-            <p>Predicted: {{response}} </p>
-            {% else %}
-            <p>No prediction...</p>
-            {% endif %}
-        </div>
-    </div>
-    
+<div class="d-flex flex-row justify-content-center p-3"> <a href="/"><button type=submit class="btn btn-secondary mb-2"> Back Menu </button></a></div>
 
 </body>
 </html>
