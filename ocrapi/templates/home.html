@@ -3,11 +3,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <title>Document</title>
+    <title>The App - home page</title>
 </head>
 <body>
     <div class="d-flex flex-row justify-content-center m-3">
-        <h1>Welcome dear developers!</h1>
+    {% if logo %}
+    <img src={{logo}} alt="{{logo}}" align="center"/>
+    {% else %}
+    <p align="center">logo - TheApp</p>
+    {% endif %}
+    </div>
+    <div class="d-flex flex-row justify-content-center m-3">
+        <h1>Welcome !</h1>
     </div>
 
     <div class="d-flex flex-row justify-content-center p-4">

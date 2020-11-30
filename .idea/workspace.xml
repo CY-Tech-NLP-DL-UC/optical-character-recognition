@@ -33,14 +33,16 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc88aea9-7e6d-4a29-9ee7-4bd02c1d3666" name="Default Changelist" comment="Rapport sur cette partie">
-      <change afterPath="$PROJECT_DIR$/ocrapi/pl_detection/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ocrapi/pl_detection/functions_pl_detection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ocrapi/pl_detection/pl_detection.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ocrapi/pl_detection/pl_detection.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ocrapi/pl_detection/pl_detection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/optical-character-recognition.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/optical-character-recognition.iml" afterDir="false" />
+    <list default="true" id="dc88aea9-7e6d-4a29-9ee7-4bd02c1d3666" name="Default Changelist" comment="Modèle from sratch V2">
+      <change afterPath="$PROJECT_DIR$/ocrapi/templates/results_plate_detection.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ocrapi/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ocrapi/pl_detection/functions_pl_detection.py" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/pl_detection/functions_pl_detection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ocrapi/pl_detection/pl_detection.py" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/pl_detection/pl_detection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ocrapi/static/outputs/extracted_plate.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/static/outputs/extracted_plate.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ocrapi/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ocrapi/templates/license_plate.html" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/templates/license_plate.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +53,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -68,21 +71,24 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/ocrapi/pl_detection" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/ocrapi/pl_detection" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ocrapi/static" />
       <recent name="$PROJECT_DIR$/ocrapi/pl_detection" />
       <recent name="$PROJECT_DIR$/license_plates_detection/data" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ocrapi/pl_detection" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.pl_detection">
+  <component name="RunManager" selected="Python.main">
     <configuration name="functions_pl_detection" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="optical-character-recognition" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -104,10 +110,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="optical-character-recognition" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ocrapi" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ocrapi/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="pl_detection" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="optical-character-recognition" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ocrapi/pl_detection" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -125,9 +155,11 @@
     <list>
       <item itemvalue="Python.functions_pl_detection" />
       <item itemvalue="Python.pl_detection" />
+      <item itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.pl_detection" />
         <item itemvalue="Python.functions_pl_detection" />
       </list>
@@ -160,6 +192,9 @@
     </task>
     <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -203,22 +238,22 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="473" y="215" key="FileChooserDialogImpl/0.0.1440.900@0.0.1440.900" timestamp="1606051425168" />
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom" timestamp="1606052474419">
+    <state width="1398" height="287" key="GridCell.Tab.0.bottom" timestamp="1606739681819">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1606052474419" />
-    <state width="1419" height="245" key="GridCell.Tab.0.center" timestamp="1606052474418">
+    <state width="1398" height="287" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1606739681819" />
+    <state width="1398" height="287" key="GridCell.Tab.0.center" timestamp="1606739681818">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1606052474418" />
-    <state width="1419" height="245" key="GridCell.Tab.0.left" timestamp="1606052474417">
+    <state width="1398" height="287" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1606739681818" />
+    <state width="1398" height="287" key="GridCell.Tab.0.left" timestamp="1606739681817">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1606052474417" />
-    <state width="1419" height="245" key="GridCell.Tab.0.right" timestamp="1606052474418">
+    <state width="1398" height="287" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1606739681817" />
+    <state width="1398" height="287" key="GridCell.Tab.0.right" timestamp="1606739681819">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1606052474418" />
+    <state width="1398" height="287" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1606739681819" />
     <state width="1398" height="304" key="GridCell.Tab.1.bottom" timestamp="1605778575805">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -235,11 +270,11 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1398" height="304" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1605778575804" />
-    <state x="48" y="51" key="SettingsEditor" timestamp="1606051467718">
+    <state x="48" y="51" key="SettingsEditor" timestamp="1606724841742">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="188" y="178" key="SettingsEditor/0.0.1440.900/1440.0.1920.1080@0.0.1440.900" timestamp="1605704594047" />
-    <state x="48" y="51" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1606051467718" />
+    <state x="48" y="51" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1606724841742" />
     <state x="320" y="177" key="Vcs.Push.Dialog.v2" timestamp="1605691201193">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

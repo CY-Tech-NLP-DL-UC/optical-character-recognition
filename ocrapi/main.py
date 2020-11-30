@@ -24,7 +24,10 @@ app.config.from_mapping(
     DATABASE=os.path.join(app.instance_path, "ocrapi.sqlite"),
     UPLOAD_FOLDER=UPLOAD_FOLDER,
     OUTPUT_FOLDER=OUTPUT_FOLDER,
-)   
+)
+
+filename_logo = "TheApp.jpg"
+rel_path_logo = Path("..") / "static" / filename_logo
 
 @app.route("/gimme_your_plate", methods=["GET", "POST"])
 def plate():
@@ -46,9 +49,7 @@ def plate():
             if os.path.isfile(plate_path):
                 os.remove(plate_path)
             image_array = pl_detection.main(original_path)
-
             im = Image.fromarray((image_array * 255).astype(np.uint8))
-            print("#" * 50)
             print(plate_path)
             im.save(plate_path)
             input_img = open(plate_path, "rb")
@@ -56,12 +57,14 @@ def plate():
             response = get_prediction(image_bytes=img_bytes)
             plate_rel_path = Path("..") / "static" / "outputs" / filename
         return render_template(
-            "license_plate.html",
+            "results_plate_detection.html",
+            logo=rel_path_logo,
             original_img=original_rel_path,
             plate_img=plate_rel_path,
             response=response,
         )
-    return render_template("license_plate.html")
+    return render_template("license_plate.html",
+            logo=rel_path_logo)
 
 @app.route("/gimme_your_letter")
 def letter():
@@ -69,12 +72,13 @@ def letter():
 
 @app.route("/")
 def home():
-    print("ok")
-    return render_template("home.html")
+    filename_logo = "TheApp.jpg"
+    rel_path_logo = Path("..") / "static" / filename_logo
+    return render_template("home.html", logo=rel_path_logo)
 
 @app.route("/welcome")
 def welcome():
-    return "Welcome dear developers!"
+    return "Welcome!"
 
 @app.route("/recognize_text_pytorch", methods=["POST"])
 def recognize_text_pytorch():
@@ -83,7 +87,6 @@ def recognize_text_pytorch():
         img_bytes = file.read()
         content = get_prediction(image_bytes=img_bytes)
         return jsonify({"prediction": content})
-
 
 if __name__ == '__main__':
     app.run(port=5139)
