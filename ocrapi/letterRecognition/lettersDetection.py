@@ -512,9 +512,9 @@ def min_erosion_v(img, threshold, kernel, h, w, seuil):
         noise += 1
   return label_img
 
-def lettersDetection(img, boo = False):
+def lettersDetection(img):
 
-  print("Step 1/4 start : bloc separation")
+  print("Step 1/3 start : bloc separation")
   h, w = img.shape[:2]
   gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
   seuil = seuillage(gray)
@@ -555,7 +555,7 @@ def lettersDetection(img, boo = False):
     sub_imgs.append(sub_img)
 
   print("Step 1 done")
-  print("Step 2 start : phrases separation")
+  print("Step 2/3 start : phrases separation")
   phrases = []
   a=0
   for sub_img in sub_imgs:
@@ -594,7 +594,7 @@ def lettersDetection(img, boo = False):
           j+=1 
       phrases.append((phrase, a-1))
   print("Step 2 done")
-  print("Step 3 start : words separation")
+  print("Step 3/3 start : words separation")
   sub_words = []
   a=0
   for phrase_tuple in phrases:
@@ -630,9 +630,7 @@ def lettersDetection(img, boo = False):
           j+=1
       sub_words.append((sub_img, a-1))
   print("Step 3 done")
-  if boo:
-    return sub_words, phrases
-  return [i[0] for i in sub_words]
+  return sub_words, phrases
 
 def informaticLetter(words, words_tuple, phrases):
   letter = ""
@@ -651,7 +649,3 @@ def informaticLetter(words, words_tuple, phrases):
           letter += "\n\n"
           letter +=word
   return letter
-
-words, phrases = lettersDetection(img, True)
-#word = fonction gab
-#print(informaticLetter(word, words, phrases))
