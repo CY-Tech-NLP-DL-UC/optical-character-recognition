@@ -32,6 +32,7 @@ def preprocess(img, imgSize, dataAugmentation=False):
 	fy = h / ht
 	f = max(fx, fy)
 	newSize = (max(min(wt, int(w / f)), 1), max(min(ht, int(h / f)), 1)) # scale according to f (result at least 1 and at most wt or ht)
+	print("IMAGE SHAPE : ", img.shape)
 	img = cv2.resize(img, newSize)
 	target = np.ones([ht, wt]) * 255
 	target[0:newSize[1], 0:newSize[0]] = img
@@ -64,5 +65,5 @@ def infer(model, image):
 
 def translateHandwriting(image):
 	model = Model(open('../model/charList.txt').read(), mustRestore=True)
-	infer(model, image)
+	result = infer(model, image)
 	return result

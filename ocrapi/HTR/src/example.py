@@ -8,15 +8,15 @@ def main():
     # exemple avec une image de test
     image = cv2.imread('../data/letters.png')
     image = np.array(image, dtype=np.uint8)
-    words, phrases = lettersDetection(img)
+    words_tuple, phrases = lettersDetection(image)
+    words = [i[0] for i in words_tuple]
 
     letter = []
     for word in words :
         result = translateHandwriting(word)
         letter.append(result)
         tf.reset_default_graph()
-    print(informaticLetter(letter, words, phrases))
-    # words are stored in "letter"
+    print(informaticLetter(letter, words_tuple, phrases))
 
 
 if __name__ == '__main__':

@@ -1,5 +1,3 @@
-from google.colab import drive
-drive.mount('/content/drive')
 
 import matplotlib.pyplot as plt
 import cv2
@@ -8,8 +6,6 @@ import itertools
 import networkx as nx
 import matplotlib.colors as col
 import matplotlib.pyplot as plt
-%matplotlib inline
-from google.colab.patches import cv2_imshow
 from imutils import contours
 import random as rd
 
@@ -37,7 +33,7 @@ class Node(object):
 
   # Print format for debugging
   def __str__(self):
-    st = "[value: " + str(self.value) + ", parent: " + str(self.parent.value) 
+    st = "[value: " + str(self.value) + ", parent: " + str(self.parent.value)
     st += ", rank: " + str(self.rank) +  "]"
     return st
 
@@ -54,7 +50,7 @@ class UnionFind:
       MakeSet(value):
         Makes a new set containing one node (with value 'value').
     """
-    
+
     # If node already exists, return it
     if self.GetNode(value):
       return self.GetNode(value)
@@ -64,27 +60,27 @@ class UnionFind:
 
     # Keep track of node
     self.__nodes_addressed_by_value[value] = node
-    
+
     return node
 
 
   def Find(self, x):
     """
       Find(Node x):
-        Returns the representative node of the set containing node x, by recursively 
+        Returns the representative node of the set containing node x, by recursively
         getting the node's parent.
-      Optimisation using path compression: 
-        Once you've found the root of the tree, set each visited node's parent to the 
-        root, therefore flattening the tree along that path, speeding up future 
+      Optimisation using path compression:
+        Once you've found the root of the tree, set each visited node's parent to the
+        root, therefore flattening the tree along that path, speeding up future
         operations.
-        This is only a constant time complexity increase, but means future Find 
+        This is only a constant time complexity increase, but means future Find
         operations along the same path are O(1).
     """
 
     # Node is not its own parent, therefore it's not the root node
-    if x.parent  != x:  
+    if x.parent  != x:
       x.parent = self.Find(x.parent) # Flatten tree as you go (Path Compression)
-    
+
     # If node is its own parent, then it is the root node -> return it
     return x.parent
 
@@ -93,12 +89,12 @@ class UnionFind:
     """
       Union(Node x, Node y):
         Performs a union on the two sets containing nodes x and y.
-        Gets the representative nodes of x's and y's respective containing sets, and 
+        Gets the representative nodes of x's and y's respective containing sets, and
         makes one of them the other's parent (depending on their rank).
       Optimisation using union-by-rank:
-        Always add the lower ranked ('smaller') tree to the larger one, ensuring no 
-        increase in tree depth. If the two trees have the same rank (worst case), the 
-        depth will increase by one. Without union-by-rank, each union operation is much 
+        Always add the lower ranked ('smaller') tree to the larger one, ensuring no
+        increase in tree depth. If the two trees have the same rank (worst case), the
+        depth will increase by one. Without union-by-rank, each union operation is much
         more likely to cause an increase in tree depth.
     """
 
@@ -106,7 +102,7 @@ class UnionFind:
     if x == y:
       return
 
-    # Get the roots of both nodes' trees (= the representative elements of each of their 
+    # Get the roots of both nodes' trees (= the representative elements of each of their
     # containing sets)
     x_root = self.Find(x)
     y_root = self.Find(y)
@@ -117,17 +113,17 @@ class UnionFind:
 
     # Perform set union
     # Union-by-rank optimisation: always add 'smaller' tree to 'larger' tree
-    if x_root.rank > y_root.rank: 
+    if x_root.rank > y_root.rank:
       # Tree x has higher rank (therefore 'bigger' tree), so add y to x
       y_root.parent = x_root
 
-    elif x_root.rank < y_root.rank: 
+    elif x_root.rank < y_root.rank:
       # Tree y has higher rank, so add x to y
       x_root.parent = y_root
 
-    else: 
+    else:
       # Trees x and y have the same rank (same 'size')
-      # Therefore add one tree to other arbitrarily and increase the resulting tree's rank 
+      # Therefore add one tree to other arbitrarily and increase the resulting tree's rank
       # by one
       x_root.parent = y_root
       y_root.rank = y_root.rank + 1
@@ -151,7 +147,7 @@ class UnionFind:
   def display_all_sets(self):
     sets = {} # Initialise so nodes can't be added twice
 
-    # Add all nodes to set dictionary 
+    # Add all nodes to set dictionary
     #   keys: representative element of each set
     #  values: the elements of the set with that representative
     for item in self.__nodes_addressed_by_value.values():
@@ -159,7 +155,7 @@ class UnionFind:
         sets[self.Find(item).value] = [] # initialise list for this key
       sets[self.Find(item).value].append(item)
 
-    # Display each representative key's set of items 
+    # Display each representative key's set of items
     st = ""
     for representative in sets.keys():
       st = st +  "("
@@ -172,7 +168,7 @@ class UnionFind:
 
 def connected_component_labelling(bool_input_image, connectivity_type=CONNECTIVITY_8):
   """
-    2 pass algorithm using disjoint-set data structure with Union-Find algorithms to maintain 
+    2 pass algorithm using disjoint-set data structure with Union-Find algorithms to maintain
     record of label equivalences.
     Input: binary image as 2D boolean array.
     Output: 2D integer array of labelled pixels.
@@ -196,29 +192,29 @@ def connected_component_labelling(bool_input_image, connectivity_type=CONNECTIVI
   # 1st Pass: label image and record label equivalences
   for y, row in enumerate(bool_input_image):
     for x, pixel in enumerate(row):
-      
+
       if pixel == False:
         # Background pixel - leave output pixel value as 0
         pass
-      else: 
+      else:
         # Foreground pixel - work out what its label should be
 
         # Get set of neighbour's labels
         labels = neighbouring_labels(labelled_image, connectivity_type, x, y)
 
         if not labels:
-          # If no neighbouring foreground pixels, new label -> use current_label 
+          # If no neighbouring foreground pixels, new label -> use current_label
           labelled_image[y,x] = current_label
           uf.MakeSet(current_label) # record label in disjoint set
-          current_label = current_label + 1 # increment for next time        
-        
+          current_label = current_label + 1 # increment for next time
+
         else:
-          # Pixel is definitely part of a connected component: get smallest label of 
+          # Pixel is definitely part of a connected component: get smallest label of
           # neighbours
           smallest_label = min(labels)
           labelled_image[y,x] = smallest_label
 
-          if len(labels) > 1: # More than one type of label in component -> add 
+          if len(labels) > 1: # More than one type of label in component -> add
                     # equivalence class
             for label in labels:
               uf.Union(uf.GetNode(smallest_label), uf.GetNode(label))
@@ -230,10 +226,10 @@ def connected_component_labelling(bool_input_image, connectivity_type=CONNECTIVI
 
   for y, row in enumerate(labelled_image):
     for x, pixel_value in enumerate(row):
-      
+
       if pixel_value > 0: # Foreground pixel
         # Get element's set's representative value and use as the pixel's new label
-        new_label = uf.Find(uf.GetNode(pixel_value)).value 
+        new_label = uf.Find(uf.GetNode(pixel_value)).value
         labelled_image[y,x] = new_label
 
         # Add label to list of labels used, for 3rd pass (flattening label list)
@@ -242,12 +238,12 @@ def connected_component_labelling(bool_input_image, connectivity_type=CONNECTIVI
           new_label_number = new_label_number + 1
 
 
-  # 3rd Pass: flatten label list so labels are consecutive integers starting from 1 (in order 
+  # 3rd Pass: flatten label list so labels are consecutive integers starting from 1 (in order
   # of top to bottom, left to right)
   # Different implementation of disjoint-set may remove the need for 3rd pass?
   for y, row in enumerate(labelled_image):
     for x, pixel_value in enumerate(row):
-      
+
       if pixel_value > 0: # Foreground pixel
         labelled_image[y,x] = final_labels[pixel_value]
 
@@ -257,15 +253,15 @@ def connected_component_labelling(bool_input_image, connectivity_type=CONNECTIVI
 def neighbouring_labels(image, connectivity_type, x, y):
   """
     Gets the set of neighbouring labels of pixel(x,y), depending on the connectivity type.
-    Labelling kernel (only includes neighbouring pixels that have already been labelled - 
+    Labelling kernel (only includes neighbouring pixels that have already been labelled -
     row above and column to the left):
       Connectivity 4:
             n
-         w  x  
-       
+         w  x
+
       Connectivity 8:
         nw  n  ne
-         w  x   
+         w  x
   """
 
   labels = set()
@@ -303,7 +299,7 @@ def neighbouring_labels(image, connectivity_type, x, y):
 
 
 def print_image(image):
-  """ 
+  """
     Prints a 2D array nicely. For debugging.
   """
   for y, row in enumerate(image):
@@ -318,7 +314,7 @@ def image_to_2d_bool_array(image):
 
 def addspace(gray, thresh, w):
   # Sum white pixels in each row
-  # Create blank space array and and final image 
+  # Create blank space array and and final image
   pixels = np.sum(thresh, axis=1).tolist()
   space = np.ones((1, w), dtype=np.uint8) * WHITE_PIXEL
   result = np.zeros((0, w), dtype=np.uint8)
@@ -334,7 +330,7 @@ def addspace(gray, thresh, w):
 
 def addspace_v(gray, thresh, h):
   # Sum white pixels in each row
-  # Create blank space array and and final image 
+  # Create blank space array and and final image
   pixels = np.sum(thresh, axis=0).tolist()
   space = np.ones((h, 1), dtype=np.uint8) * WHITE_PIXEL
   result = np.zeros((h, 0), dtype=np.uint8)
@@ -396,7 +392,7 @@ def moy_space(img, threshold):
       else:
         i_min = i+1
         white_space_list2 = (threshold[max(0,i-1)], max(0,i-1))
-        min_dist = HUGE_NUMBER 
+        min_dist = HUGE_NUMBER
         for j in range(len(white_space_list1[0])):
           if white_space_list1[0][j] == WHITE_PIXEL:
             min_dist_rel = HUGE_NUMBER
@@ -422,7 +418,7 @@ def moy_space_v(img, threshold, h):
   pixels = np.sum(threshold, axis=0).tolist()
   i_min = 0
   for i in range(len(img[0])):
-    
+
     if pixels[i] == 0:
       i_max = i
       #print(i_min,i_max)
@@ -431,7 +427,7 @@ def moy_space_v(img, threshold, h):
       else:
         i_min = i+1
         white_space_list2 = (threshold[:, max(0,i-1)], max(0,i-1))
-        min_dist = HUGE_NUMBER 
+        min_dist = HUGE_NUMBER
         for j in range(len(white_space_list1[0])):
           if white_space_list1[0][j] == WHITE_PIXEL:
             min_dist_rel = HUGE_NUMBER
@@ -456,7 +452,7 @@ def min_erosion(img, threshold, kernel, h, w, seuil):
 
   moy = sum(list_moy_white_space) / max(1, len(list_moy_white_space))
   nbr_blocs = len([i for i in list_moy_white_space if i > moy])
-      
+
   erosion = cv2.erode(img, kernel, iterations = MIN_EROSION_ITERATION)
   blur = cv2.GaussianBlur(erosion,BLUR_RATE,0)
   threshold = cv2.threshold(blur, seuil, WHITE_PIXEL, cv2.THRESH_BINARY_INV)[1]
@@ -519,15 +515,13 @@ def lettersDetection(img):
   gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
   seuil = seuillage(gray)
   thresh = cv2.threshold(gray, seuil, WHITE_PIXEL, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-  cv2_imshow(thresh)
   img = addspace(gray, thresh, w)
-  cv2_imshow(img)
   kernel = np.ones((3,3), np.uint8)
   kernel[0, 0] = 0
   kernel[0, 2] = 0
   kernel[2, 0] = 0
   kernel[2, 2] = 0
-  
+
   thresh = cv2.threshold(img, seuil, WHITE_PIXEL, cv2.THRESH_BINARY_INV)[1]  # ensure binary
   h, w = img.shape[:2]
   label_img = min_erosion(img, thresh, kernel, h, w, seuil)
@@ -537,7 +531,6 @@ def lettersDetection(img):
   labeled_img = cv2.merge([label_hue, blank_ch, blank_ch])
   labeled_img = cv2.cvtColor(labeled_img, cv2.COLOR_HSV2BGR)
   labeled_img[label_hue==0] = 0
-  cv2_imshow(labeled_img)
   sub_imgs = []
   for i in range(1, np.max(label_img) + 1):
     indices = np.where(label_img == i)
@@ -577,7 +570,7 @@ def lettersDetection(img):
         if i_max - i_min < MIN_BLACK_LINE:
           i_min = i-1
           continue
-        
+
         ind_phrases.append((max(int(i_min-moy_s/4), 0), min(int(i_max+moy_s/4), len(sub_img)-1)))
         moy_b +=  min(int(i_max+moy_s/4), len(sub_img)-1) - max(int(i_min-moy_s/4), 0)
         i_min = i+1
@@ -591,7 +584,7 @@ def lettersDetection(img):
         if sum(phrase[j]) == WHITE_PIXEL*len(phrase[j]):
           phrase =  np.delete(phrase, (j), axis=0)
         else:
-          j+=1 
+          j+=1
       phrases.append((phrase, a-1))
   print("Step 2 done")
   print("Step 3/3 start : words separation")
@@ -619,11 +612,11 @@ def lettersDetection(img):
       if abs((borders[1][0] - borders[0][0]) * (borders[1][1] - borders[0][1])) < h*w*2/100:
         continue
       sub_img = phrase[borders[0][0] : borders[1][0], borders[0][1] : borders[1][1]]
-      h, w = sub_img.shape[:2]
+      h_sub, w_sub = sub_img.shape[:2]
       j=0
       sum_col = np.sum(sub_img, axis=0)
       while j < len(sum_col):
-        if sum_col[j] == WHITE_PIXEL*h:
+        if sum_col[j] == WHITE_PIXEL*h_sub:
           sub_img =  np.delete(sub_img, (j), axis=1)
           sum_col =  np.delete(sum_col, (j), axis=0)
         else:
@@ -644,8 +637,10 @@ def informaticLetter(words, words_tuple, phrases):
         indice_phrase2 = words_tuple[i-1][1]
         if phrases[indice_phrase1][1] == phrases[indice_phrase2][1]:
           letter += "\n"
-          letter += word
+          letter += word + " "
         else:
           letter += "\n\n"
-          letter +=word
+          letter +=word + " "
+    else:
+        letter += word + " "
   return letter

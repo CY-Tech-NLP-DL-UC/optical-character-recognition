@@ -7,21 +7,28 @@ pip3 install opencv-python
 pip3 install editdistance
 pip3 install tensorflow
 
+pip3 install matplotlib
+pip3 install networkx
+pip3 install imutils
 
 
-Call the translateHandwriting(imagePath) function :
+If you need, you can create a virtual environment :
 
-import :
-from TranslateHandwriting import translateHandwriting
-
-call:
-result = translateHandwriting('../data/test.png')
-or any other path to an image you want to translate
+python3 -m venv <path/to/your/virtual/env>
 
 
-The result will appear in terminal and is stored in the variable result
+Activate it with :
+
+source bin/activate
+
+Then install all the modules given above.
 
 
-For an example, see "example.py" and run 
+Quit the environment with :
+
+deactivate
+
+
+For an example about how to use HTR, see "example.py" and run 
 python3 example.py
 from the /src directory
