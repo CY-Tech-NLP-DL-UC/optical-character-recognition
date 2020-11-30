@@ -33,16 +33,12 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc88aea9-7e6d-4a29-9ee7-4bd02c1d3666" name="Default Changelist" comment="Modèle from sratch V2">
-      <change afterPath="$PROJECT_DIR$/ocrapi/templates/results_plate_detection.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="dc88aea9-7e6d-4a29-9ee7-4bd02c1d3666" name="Default Changelist" comment="page web - detection plate fonctionnel">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ocrapi/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ocrapi/pl_detection/functions_pl_detection.py" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/pl_detection/functions_pl_detection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ocrapi/pl_detection/pl_detection.py" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/pl_detection/pl_detection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ocrapi/static/outputs/extracted_plate.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/static/outputs/extracted_plate.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ocrapi/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/templates/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ocrapi/templates/license_plate.html" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/templates/license_plate.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ocrapi/templates/results_plate_detection.html" beforeDir="false" afterPath="$PROJECT_DIR$/ocrapi/templates/results_plate_detection.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +186,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605691198735</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="page web - detection plate fonctionnel">
+      <created>1606740572844</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1606740572845</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -223,7 +226,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Code 2 versions (notebook)&#10;Photos for examples&#10;pretrained model" />
     <MESSAGE value="Rapport sur cette partie" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rapport sur cette partie" />
+    <MESSAGE value="page web - detection plate fonctionnel" />
+    <option name="LAST_COMMIT_MESSAGE" value="page web - detection plate fonctionnel" />
   </component>
   <component name="WindowStateProjectService">
     <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606051575076">
@@ -238,22 +242,22 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="473" y="215" key="FileChooserDialogImpl/0.0.1440.900@0.0.1440.900" timestamp="1606051425168" />
-    <state width="1398" height="287" key="GridCell.Tab.0.bottom" timestamp="1606739681819">
+    <state width="1398" height="287" key="GridCell.Tab.0.bottom" timestamp="1606741314691">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="287" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1606739681819" />
-    <state width="1398" height="287" key="GridCell.Tab.0.center" timestamp="1606739681818">
+    <state width="1398" height="287" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1606741314691" />
+    <state width="1398" height="287" key="GridCell.Tab.0.center" timestamp="1606741314689">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="287" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1606739681818" />
-    <state width="1398" height="287" key="GridCell.Tab.0.left" timestamp="1606739681817">
+    <state width="1398" height="287" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1606741314689" />
+    <state width="1398" height="287" key="GridCell.Tab.0.left" timestamp="1606741314687">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="287" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1606739681817" />
-    <state width="1398" height="287" key="GridCell.Tab.0.right" timestamp="1606739681819">
+    <state width="1398" height="287" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1606741314687" />
+    <state width="1398" height="287" key="GridCell.Tab.0.right" timestamp="1606741314690">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="287" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1606739681819" />
+    <state width="1398" height="287" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1606741314690" />
     <state width="1398" height="304" key="GridCell.Tab.1.bottom" timestamp="1605778575805">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
