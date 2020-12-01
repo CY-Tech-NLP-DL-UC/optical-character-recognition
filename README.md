@@ -41,18 +41,52 @@ cd optical-character-recognition
 pip install -e .
 ```
 
+## Setting up the virtual environment
+
+In order to avoid problems with versions, you can set up a virtual environment. Follow these steps to create and configure the virtual environment.
+
+Creation :
+
+```sh
+python3 -m venv <path/to/your/virtual/env>
+source bin/activate
+```
+
+Configuration :
+
+```sh
+pip3 install --upgrade pip
+pip3 install opencv-python
+pip3 install editdistance
+pip3 install tensorflow
+pip3 install matplotlib
+pip3 install networkx
+pip3 install imutils
+pip3 install torch
+pip3 install https://files.pythonhosted.org/packages/8c/52/33d739bcc547f22c522def535a8
+da7e6e5a0f6b98594717f519b5cb1a4e1/torchvision-0.1.8-py2.py3-none-any.whl
+pip3 install keras
+```
+
+Quit the virtual environment :
+
+```sh
+deactivate
+```
+
+
 ## Starting the API:
 
 In the root directory `ocrapi`:
 
 ```sh
-flask run
+python3 main.py
 ```
 
 You should get an output in your terminal that looks like this:
 
 ```sh
- * Serving Flask app "ocrapi" (lazy loading)
+ * Serving Flask app "main" (lazy loading)
  * Environment: development
  * Debug mode: on
  * Running on http://127.0.0.1:5001/ (Press CTRL+C to quit)
