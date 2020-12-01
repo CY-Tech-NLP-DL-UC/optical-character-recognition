@@ -1,0 +1,65 @@
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Gimme your letter !</title>
+</head>
+<body style="overflow-y: scroll;" class="d-flex flex-row justify-content-center m-3">
+
+<main>
+    <div align="center">
+        <div>
+        {% if logo %}
+        <img src={{logo}} alt="{{logo}}"/>
+        {% else %}
+        <p align="center">logo - TheApp</p>
+        {% endif %}
+        </div>
+
+        <div>
+            <h1>Gimme your letter</h1>
+        </div>
+
+    </div>
+
+    <div align="center">
+        <div>
+            {% if original_img %}
+            <p align="left">Your letter : </p>
+            <img src={{original_img}} alt="{{original_img}}" height="400", width="400" align="center">
+            {% else %}
+            <p>Waiting for an image...</p>
+            {% endif %}
+
+            <div class="card" style="width: 30rem;">
+                <div class="card-body">
+                {% if response %}
+                <p align="left"><b>Here is your letter : </b></p>
+                <p align="left">{{response}}</p>
+                </div>
+            </div>
+                {% else %}
+                <p>No prediction...</p>
+                {% endif %}
+        </div>
+    </div>
+    <div align="center">
+        <br>
+        <a href="/">
+            <button type=submit class="btn btn-secondary mb-2"> Menu </button>
+        </a>
+        <a href="/gimme_your_letter">
+            <button type=submit class="btn btn-secondary mb-2"> Gimme your letter ! </button>
+        </a>
+    </div>
+
+
+
+</main>
+</body>
+
+
+</html>

@@ -8,6 +8,8 @@ import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 import os
 
+from pathlib import Path
+
 print(tf.__version__)
 
 
@@ -141,8 +143,9 @@ class Model:
 		sess=tf.Session() # TF session
 
 		saver = tf.train.Saver(max_to_keep=1) # saver saves model to file
+		model_path = Path(__file__).resolve().parent.parent / "model"
 		modelDir = '../model/'
-		latestSnapshot = tf.train.latest_checkpoint(modelDir) # is there a saved model?
+		latestSnapshot = tf.train.latest_checkpoint(model_path) # is there a saved model?
 
 		# if model must be restored (for inference), there must be a snapshot
 		if self.mustRestore and not latestSnapshot:

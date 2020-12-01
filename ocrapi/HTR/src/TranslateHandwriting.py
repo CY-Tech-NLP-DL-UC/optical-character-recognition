@@ -5,11 +5,14 @@ import sys
 import argparse
 import cv2
 import editdistance
-from Model import Model
+#from Model import Model
+from . import Model
 
 # imports for preprocess
 import random
 import numpy as np
+
+from pathlib import Path
 
 
 def preprocess(img, imgSize, dataAugmentation=False):
@@ -56,7 +59,7 @@ class Batch:
 
 def infer(model, image):
 	"recognize text in image provided by file path"
-	img = preprocess(image, Model.imgSize)
+	img = preprocess(image, Model.Model.imgSize)
 	batch = Batch(None, [img])
 	(recognized, probability) = model.inferBatch(batch, True)
 	print('Recognized:', '"' + recognized[0] + '"')
@@ -64,6 +67,7 @@ def infer(model, image):
 	return recognized[0]
 
 def translateHandwriting(image):
-	model = Model(open('../model/charList.txt').read(), mustRestore=True)
+	charList_path = Path(__file__).resolve().parent.parent / "model" / "charList.txt"
+	model = Model.Model(open(charList_path).read(), mustRestore=True)
 	result = infer(model, image)
 	return result

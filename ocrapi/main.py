@@ -7,6 +7,9 @@ from werkzeug.utils import secure_filename
 from lp_prediction_pytorch.lp_prediction import get_prediction
 from pl_detection import pl_detection
 
+from HTR.src import extractLetter
+
+
 # from .pl_detection.pl_detection import pl_detection
 
 # import io
@@ -17,7 +20,7 @@ import matplotlib.pyplot as plt
 UPLOAD_FOLDER = Path(__file__).resolve().parent / "static" / "uploads"
 OUTPUT_FOLDER = Path(__file__).resolve().parent / "static" / "outputs"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
-    
+
 app = Flask(__name__)
 app.config.from_mapping(
     SECRET_KEY="dev",
@@ -66,9 +69,37 @@ def plate():
     return render_template("license_plate.html",
             logo=rel_path_logo)
 
-@app.route("/gimme_your_letter")
+@app.route("/gimme_your_letter", methods=["GET", "POST"])
 def letter():
-    return render_template("handwritten.html")
+
+    if request.method == "POST":
+        if "file" not in request.files:
+            flash("No file part")
+            return redirect(request.url)
+        file = request.files["file"]
+        if file.filename == "":
+            flash("No selected file")
+            return redirect(request.url)
+        if file:
+            filename = secure_filename(file.filename)
+            original_path = app.config["UPLOAD_FOLDER"] / filename
+            original_rel_path = Path("..") / ".." / "static" / "uploads" / filename
+            file.save(original_path)
+            print(original_path)
+            response = extractLetter.main(str(original_path))
+
+            # je suis pas très sûre de ce à quoi ça sert ça
+            # plate_rel_path = Path("..") / "static" / "outputs" / filename
+        return render_template(
+            "results_handwritten.html",
+            logo=rel_path_logo,
+            original_img=original_rel_path,
+            response=response,
+        )
+    return render_template("handwritten.html",
+            logo=rel_path_logo)
+
+    #return render_template("handwritten.html")
 
 @app.route("/")
 def home():
@@ -89,5 +120,4 @@ def recognize_text_pytorch():
         return jsonify({"prediction": content})
 
 if __name__ == '__main__':
-    app.run(port=5139)
-
+    app.run(port=5131)

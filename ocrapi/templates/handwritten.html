@@ -3,9 +3,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Gimme your letter !</title>
 </head>
 <body>
-    <h1>Gimme your letter</h1>
+
+  <div class="d-flex flex-row justify-content-center m-3">
+  {% if logo %}
+  <img src={{logo}} alt="{{logo}}" align="center"/>
+  {% else %}
+  <p align="center">logo - TheApp</p>
+  {% endif %}
+  </div>
+
+  <div class="d-flex flex-row justify-content-center m-3">
+      <h1>Gimme your letter</h1>
+  </div>
+
+  <div class="d-flex flex-row justify-content-center p-3">
+      <form method=post enctype=multipart/form-data class="d-flex flex-column justify-content-around m-3" style="height: 200px;">
+          <div class="custom-file">
+              <input class="custom-file-input" type=file name=file id="uploadFile">
+              <label class="custom-file-label" for="uploadFile"></label>
+          </div>
+          <div class="d-flex flex-row justify-content-center m-3">
+            <a href="/gimme_your_letter">
+            <button type=submit class="btn btn-primary" align="center"> GO !</button>
+            </a>
+          </div>
+      </form>
+
+  </div>
+
+  <div class="d-flex flex-row justify-content-center p-3"> <a href="/"><button type=submit class="btn btn-secondary mb-2"> Back Menu </button></a></div>
+
+
 </body>
 </html>
